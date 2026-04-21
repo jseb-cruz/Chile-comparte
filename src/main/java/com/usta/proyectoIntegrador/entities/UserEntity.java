@@ -16,18 +16,13 @@ public class UserEntity implements Serializable {
 
     @Id
     @Size(max=10)
-@Column(name="cedula")
-    private String cedula;
+@Column(name="id")
+    private String id;
 
     @NotBlank
     @Size(max=50)
-    @Column(name="nombre_usu",length = 50,nullable = false)
+    @Column(name="nombre",length = 50,nullable = false)
     private String nombre;
-
-    @NotBlank
-    @Size(max=50)
-    @Column(name="apellido_usu",length = 50,nullable = false)
-    private String apellido;
 
     @NotBlank
     @Email
@@ -39,9 +34,6 @@ public class UserEntity implements Serializable {
     @Size(max = 100)
     @Column(name ="clave", length = 100,nullable = false)
     private String clave;
-
-    @Column(name ="estado_usu", nullable = false)
-    private  boolean estadoUsu = true;
 
     //realcion con roles
     @ManyToOne(fetch = FetchType.LAZY,optional = false)
