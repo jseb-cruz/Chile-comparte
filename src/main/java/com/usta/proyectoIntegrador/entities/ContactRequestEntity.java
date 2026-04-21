@@ -52,6 +52,13 @@ private  String finalidad;
     @Column(name = "fecha" , nullable = false)
     private LocalDateTime fecha;
 
+    //realcion con usuarios
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "usuarios_nombre")
+    private UserEntity usuario;
+
+
     public ContactRequestEntity(){}
 
 }

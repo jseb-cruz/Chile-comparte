@@ -46,6 +46,13 @@ private static final long serialVersionUID = 1L;
     @Column(name = "fecha" , nullable = false)
     private LocalDate fecha;
 
+    //realcion con usuarios
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "usuarios_nombre")
+    private UserEntity usuario;
+
+
     public TestimonialEntity(){}
 
 
