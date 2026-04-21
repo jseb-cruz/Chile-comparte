@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en"xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body class="min-h-screen bg-black text-white"
+th:style=" 'background-image:
+linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)),
+url(' + @{/images/carro_fondo.jpg} + ');
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+background-attachment: fixed;
+'">
+
+
+<div class="flex min-h-screen">
+    <aside th:replace="layout/layout  ::  sidebar"></aside>
+<main class="flex-1 flex items-center justify-center px-10 py-8">
+<section class="w-full max-w-5xl rounded-[26x] color-rect-border
+border-white/20 bg-[rgba(35,35,35,0.50)]
+backdrop-blur-md shadow-2xl p-10 md:p-14">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+        <div>
+            <p class="text-white/75 tracking-[0.3em] text-sm mb-3">
+                ENTERPRISE MANAGMENT
+            </p>
+
+            <h1 class="text-4xl md:text-6xl font-light
+tracking-[0.25em] leading-tight">TESLA</h1>
+
+            <p class="mt-4 text-lg text-white/80">
+                Vehicle and energy product management plataform
+            </p>
+
+            <p class="mt-6 text-white/70 leading-relaxed">
+                Manage products such as cars, solar panels,
+                solas roofs, batteries, and sales operation
+                in one enenterprise  system. Designed for administrators
+                and sellers.
+
+            </p>
+
+            <div class="mt-9 flex flex-wrap gap-4">
+                <a th:href="@{/login}"
+                class="bg-red-600 hover:bg-red-500 transition
+                 px-6 py-3 rounded-xl font-semibold shadow-lg">
+                    <i class="fa-solid fa-right-to-bracket mr-2"></i>
+                    Login
+                </a>
+                <a th:href="@{/products}"
+                class="border border-white/30 hover:bg-white/10
+                   transition px-6 py-3 rounded-xl fond-semibold">
+                View Products
+                </a>
+
+
+
+            </div>
+            <p class="mt-10 text-sm text-white/60">
+                Enterprice management system
+                <br>
+                All rigths reserved 2026
+            </p>
+        </div>
+
+        <div class="hidden md:flex justify-center">
+            <div class="w-full h-[360px] rounded-[24px] border
+               border-white/16 bg-black/20 backdrop-blur-sm
+                 overflow-hidden shadow-xl">
+                <img th:src="@{/images/carro_fondo.jpg}"
+                alt="Luxury car background"
+                class="w-full h-full object-cover opacity-89">
+            </div>
+        </div>
+    </div>
+
+</section>
+</main>
+</div>
+</body>
+</html>

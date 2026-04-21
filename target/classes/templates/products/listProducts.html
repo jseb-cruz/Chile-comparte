@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body class="min-h-screen bg-[#0F172A] text-gray-200"
+      th:style="'background-image:
+      linear-gradient(rgba(15,23,42,0.85), rgba(15,23,42,0.95)),
+      url(' + @{/images/carro_fondo.jpg} + ');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;'">
+<div class="flex min-h-screen">
+    <aside th:replace="layout/layout :: sidebar"></aside>
+
+    <main class="flex-1 px-8 py-6 ">
+        <section class="w-full max-w-7xl mx-auto rounded-[28px]
+                        bg-[#1E293B]/80 backdrop-blur-md
+                        border border-gray-700 shadow-2xl p-6">
+
+            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-6">
+
+                <div>
+                    <h1 class="text-3xl font-light tracking-[0.25em]">
+                        PRODUCTS
+                    </h1>
+                    <p class="text-white/70 mt-2">
+                        Manage vehicles and energy products
+                    </p>
+                </div>
+
+                <a th:href="@{/products/new}"
+                   class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500
+                        transition px-5 py-3 rounded-2xl font-semibold shadow-lg">
+                    <i class="fa-solid fa-plus"></i>
+                    <span>NEW PRODUCTS</span>
+
+                </a>
+            </div>
+
+            <!--filtros-->
+            <form th:action="@{/products}" method="get"
+                  class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-4 mb-8">
+                <div>
+                    <label class="block text-sm text-white/80 mb-2
+
+                      tracking-[0.15em]">NAME</label>
+                    <input type="text"
+                           name="nombreProd"
+                           th:value="${nombreProd}"
+                           placeholder="Search By Name"
+                           class="w-full px-4 py-3 rounded-2xl bg-[#1E293B]
+                                border border-gray-600 text-white placeholder-gray-400
+                                focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+
+                <div>
+                    <label class="block text-sm text-white/80 mb-2
+                      tracking-[0.15em]">CATEGORY</label>
+                    <input type="text"
+                           name="categoria"
+                           th:value="${categoria}"
+                           placeholder="Search By Category"
+                           class="w-full px-4 py-3 rounded-2xl bg-[#1E293B]
+                                border border-gray-600 text-white placeholder-gray-400
+                                focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+
+                <div>
+                    <label class="block text-sm text-white/80 mb-2
+                      tracking-[0.15em]">BRAND</label>
+                    <input type="text"
+                           name="marca"
+                           th:value="${marca}"
+                           placeholder="Search By Brand"
+                           class="w-full px-4 py-3 rounded-2xl bg-[#1E293B]
+                            border border-gray-600 text-white placeholder-gray-400
+                            focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+
+                <div>
+                    <label class="block text-sm text-white/80 mb-2
+                      tracking-[0.15em]">CODE</label>
+                    <input type="number"
+                           name="idProd"
+                           th:value="${idProd}"
+                           placeholder="Search By Code"
+                           class="w-full px-4 py-3 rounded-2xl bg-black/30
+                      border border-white/20 text-white placeholder-white/40
+                      focus:outline-none focus:ring-2 focus:ring-red-500">
+                </div>
+
+                <div class="flex items-end gap-3">
+                    <button type="submit"
+                            class="w-full h-[52px] flex items-center justify-center
+                                rounded-2xl bg-blue-600 hover:bg-blue-500
+                                transition font-semibold shadow-md">
+
+                        <i class="fa-solid fa-magnifying-glass mr-2"></i>
+                        Search
+                    </button>
+                    <a th:href="@{/products}"
+                       class="w-full h-[52px] flex items-center justify-center
+                                rounded-2xl bg-gray-700/40 hover:bg-gray-600/40
+                                border border-gray-600 transition font-semibold">
+                        Clear
+                    </a>
+                </div>
+
+            </form>
+
+            <!--Mostrar productos,si hay-->
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+                <div th:each="product : ${products}"
+                     class="rounded-[24px] overflow-hidden border border-gray-700
+                        bg-[#1E293B]/70 shadow-xl backdrop-blur-sm">
+
+                    <div class="bg-[#334155] py-3 px-4 text-center">
+                        <h2 class="text-large tracking-[0.18em] font-semibold"
+                            th:text="${product.nombreProd}">MODEL S</h2>
+
+                    </div>
+                    <div class="bg-gray-100 h-[220px] flex items-center justify-center overflow-hidden">
+                        <img th:src="${product.fotoUrl !=null ? product.fotoUrl :'/images/No_Image.png'}"
+                             alt="Product image"
+                             class="h-full w-full object-contain p-4">
+                    </div>
+                    <div class="px-4 py-3 bg-[#0F172A] text-sm text-gray-300 space-y-1">
+                        <p>
+                            <span class="font-semibold">Code:</span>
+                            <span th:text="${product.idProd}">1</span>
+                        </p>
+                        <p>
+                            <span class="font-semibold">Brand:</span>
+                            <span th:text="${product.marca}">Tesla</span>
+                        </p>
+                        <p>
+                            <span class="font-semibold">Category:</span>
+                            <span th:text="${product.categoria}">Vehicle</span>
+                        </p>
+                        <p>
+                            <span class="font-semibold">Price:</span>
+                            <span th:text="${product.precio}">0</span>
+                        </p>
+                    </div>
+                    <div class="grid grid-cols-3 text-center text-sm font-semibold
+                                tracking -[0.12em]">
+                        <a th:href="@{/products/edit/{id}(id=${product.idProd})}"
+                           class="bg-slate-800 hover:bg-slate-600 transition py-3">
+                            Edit
+                        </a>
+
+                        <a th:href="@{/products/detail/{id}(id=${product.idProd})}"
+                           class="bg-gray-800 hover:bg-gray-600 transition py-3
+                                  border-l border-gray-600">
+                            Details
+                        </a>
+
+                        <a th:href="@{/products/delete/{id}(id=${product.idProd})}"
+                           class="bg-red-600 hover:bg-red-500 transition py-3">
+                            Delete
+                        </a>
+
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div th:if="${#lists.isEmpty(products)}"
+                 class="text-center py-16 text-gray-400">
+                <i class="fa-solid fa-box-open text-5xl mb-4"></i>
+                <p class="text-xl tracking-[0.15em]">NO PRODUCTS FOUND</p>
+            </div>
+            <div class="text-center mt-8 text-sm text-gray-500 tracking-[0.12em]">
+                COPYRIGHT 2026
+            </div>
+        </section>
+
+    </main>
+</div>
+</body>
+</html>
