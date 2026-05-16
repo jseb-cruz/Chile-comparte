@@ -54,7 +54,7 @@ public class NewsEntity implements Serializable {
     @Column(name = "fecha" , nullable = false)
     private LocalDateTime fecha;
 
-    //realcion con usuarios
+    //relacion con usuarios
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "usuarios_nombre")
