@@ -1,0 +1,25 @@
+:root {
+    --color-primario: #002b49; /* Tu azul oscuro profesional */
+    --color-secundario: #ff6a00; /* Tu naranja vibrante para botones */
+    --color-fondo: #f4f4f4; /* Gris muy claro para fondos */
+    --color-texto: #333333; /* Gris oscuro para lectura cómoda */
+}
+
+body {
+    background-color: var(--color-fondo);
+    color: var(--color-texto);
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.btn-primary {
+    background-color: var(--color-secundario);
+    border-color: var(--color-secundario);
+}
+
+.btn-primary:hover {
+    background-color: #e65c00;
+}
+
+.navbar {
+    background-color: var(--color-primario) !important;
+}

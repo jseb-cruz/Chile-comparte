@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/layout :: head}"></head>
+<body class="bg-gray-50">
+<div th:replace="~{layout/layout :: navbar}"></div>
+
+<main class="container mx-auto py-12 px-4 max-w-4xl">
+    <article class="bg-white p-8 md:p-12 rounded-3xl shadow-lg">
+        <img th:src="${noticia.fotoUrl}" class="w-full h-48 object-contain bg-gray-50">
+
+        <h1 th:text="${noticia.titulo}" class="text-4xl font-bold text-blue-900 mb-6"></h1>
+
+        <div class="flex gap-4 text-gray-500 mb-8 border-b pb-6">
+            <span><i class="fa-solid fa-user mr-2"></i><span th:text="${noticia.autor}"></span></span>
+            <span><i class="fa-solid fa-calendar mr-2"></i><span th:text="${#temporals.format(noticia.fecha, 'dd/MM/yyyy')}"></span></span>
+        </div>
+
+        <div class="prose prose-lg text-gray-800 leading-relaxed" th:text="${noticia.contenido}"></div>
+
+        <div class="mt-12">
+            <a href="/noticias" class="text-blue-900 font-bold hover:underline">← Volver a noticias</a>
+        </div>
+    </article>
+</main>
+
+<div th:replace="~{layout/layout :: footer}"></div>
+</body>
+</html>

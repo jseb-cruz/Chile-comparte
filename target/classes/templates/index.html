@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/layout :: head}"></head>
+<body class="bg-white min-h-screen is-index">
+
+<div th:replace="~{layout/layout :: navbar}"></div>
+
+<main class="container mx-auto p-4 mt-10">
+
+  <div class="bg-blue-900 rounded-3xl p-16 text-white shadow-xl text-center mb-16">
+    <h1 class="text-5xl font-bold mb-6">Bienvenidos a Chile Comparte</h1>
+    <p class="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
+      Una plataforma diseñada para que nuestra comunidad pueda colaborar, compartir recursos y ayudarse mutuamente de forma fácil y segura.
+    </p>
+  </div>
+
+  <div class="grid md:grid-cols-3 gap-8 mb-20">
+    <div class="bg-white p-8 rounded-2xl shadow-md border-b-4 border-orange-500">
+      <i class="fa-solid fa-handshake text-4xl text-blue-900 mb-4"></i>
+      <h3 class="text-xl font-bold mb-2">Colaboración</h3>
+      <p class="text-gray-600">Encuentra personas dispuestas a compartir recursos y conocimiento en tu comunidad.</p>
+    </div>
+    <div class="bg-white p-8 rounded-2xl shadow-md border-b-4 border-orange-500">
+      <i class="fas fa-shield-alt text-4xl text-blue-900 mb-4"></i>
+      <h3 class="text-xl font-bold mb-2">Seguridad</h3>
+      <p class="text-gray-600">Sistema autenticado para asegurar interacciones confiables entre los miembros.</p>
+    </div>
+    <div class="bg-white p-8 rounded-2xl shadow-md border-b-4 border-orange-500">
+      <i class="fa-solid fa-comments text-4xl text-blue-900 mb-4"></i>
+      <h3 class="text-xl font-bold mb-2">Comunidad</h3>
+      <p class="text-gray-600">Conecta, solicita ayuda y fortalece los lazos con quienes te rodean.</p>
+    </div>
+  </div>
+
+  <h2 class="text-3xl font-bold text-gray-800 mb-12 uppercase tracking-widest text-center">Últimas Noticias</h2>
+
+  <div class="grid md:grid-cols-3 gap-8 mb-10">
+    <div th:each="n : ${noticias}" class="bg-white rounded-2xl shadow-lg border-t-4 border-blue-900 overflow-hidden hover:shadow-2xl transition-all">
+
+      <img
+              th:if="${n.fotoUrl != null and !n.fotoUrl.isEmpty()}"
+              th:src="${n.fotoUrl}"
+              th:alt="${n.titulo}"
+              class="w-full h-48 object-cover">
+
+      <div class="p-6">
+        <div class="flex items-center text-sm text-gray-500 mb-2">
+          <i class="fa-regular fa-calendar-days mr-2"></i>
+          <span th:text="${#temporals.format(n.fecha, 'dd MMMM yyyy')}">Fecha</span>
+        </div>
+
+        <h3 th:text="${n.titulo}" class="text-xl font-bold mb-3 text-blue-900">Título</h3>
+        <p th:text="${n.resumen}" class="text-gray-600 mb-4 line-clamp-3">Descripción...</p>
+
+        <div class="flex justify-between items-center mt-6">
+          <span th:text="${n.autor}" class="text-sm font-semibold text-gray-700">Autor</span>
+          <a th:href="@{/noticias/detalle/{id}(id=${n.idNoticia})}"
+             class="text-blue-900 font-bold hover:text-blue-700 transition">
+            Leer más →
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div th:if="${#lists.isEmpty(noticias)}" class="text-center py-10 text-gray-400 italic">
+    No hay noticias disponibles en este momento.
+  </div>
+
+  <div class="text-center mb-20">
+    <a th:href="@{/noticias}" class="px-8 py-3 bg-blue-900 text-white font-bold rounded-lg hover:bg-blue-800 transition">
+      Ver todas las noticias
+    </a>
+  </div>
+</main>
+
+<section class="py-16 bg-gray-50">
+  <div class="container mx-auto px-4">
+    <h2 class="text-3xl font-bold text-center text-blue-900 mb-12">Lo que dicen en nuestra comunidad</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div th:each="t : ${testimoniosAleatorios}" class="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 transform hover:scale-105 transition-all duration-300">
+        <img th:src="${t.fotoUrl}" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover border-4 border-blue-50">
+        <p th:text="${'“' + t.comentario + '”'}" class="text-gray-600 italic text-sm mb-4 text-center overflow-hidden line-clamp-3"></p>
+
+
+        <div class="flex justify-center gap-4 mt-4">
+
+          <a th:if="${t.instagramUrl != null and !#strings.isEmpty(t.instagramUrl)}"
+             th:href="${t.instagramUrl}"
+             target="_blank"
+             class="text-pink-600 hover:text-pink-800">
+            <i class="fab fa-instagram text-xl"></i>
+          </a>
+
+          <a th:if="${t.facebookUrl != null and !#strings.isEmpty(t.facebookUrl)}"
+             th:href="${t.facebookUrl}"
+             target="_blank"
+             class="text-blue-600 hover:text-blue-800">
+            <i class="fab fa-facebook text-xl"></i>
+          </a>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<main class="container mx-auto p-4 mb-20">
+  <div th:if="${success}" class="max-w-xl mx-auto mb-8 p-4 bg-green-100 text-green-800 border border-green-200 rounded-lg text-center font-bold">
+    <i class="fa-solid fa-check-circle mr-2"></i>
+    <span th:text="${success}"></span>
+  </div>
+
+  <div class="max-w-xl mx-auto bg-white p-10 rounded-3xl shadow-xl border border-gray-100">
+    <div class="flex items-center justify-center gap-3 mb-10">
+      <i class="fa-solid fa-envelope text-blue-900 text-3xl"></i>
+      <h2 class="text-3xl font-bold text-gray-800">Contáctanos</h2>
+    </div>
+    <form th:action="@{/contacto/enviar}" method="post" class="space-y-6">
+      <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+      <div>
+        <label class="block text-sm font-bold text-gray-600 mb-2">Nombre Completo *</label>
+        <input type="text" name="nombre" required class="w-full px-4 py-3 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-900">
+      </div>
+      <div>
+        <label class="block text-sm font-bold text-gray-600 mb-2">Correo Electrónico *</label>
+        <input type="email" name="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-900">
+      </div>
+      <div>
+        <label class="block text-sm font-bold text-gray-600 mb-2">Teléfono *</label>
+        <input type="tel" name="telefono" required class="w-full px-4 py-3 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-900">
+      </div>
+      <div>
+        <label class="block text-sm font-bold text-gray-600 mb-2">Finalidad *</label>
+        <select name="finalidad" required class="w-full px-4 py-3 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-900 bg-white text-gray-500">
+          <option value="" disabled selected>Seleccione una opción</option>
+          <option value="Consulta General">Consulta General</option>
+          <option value="Soporte Técnico">Soporte Técnico</option>
+          <option value="Colaboración">Colaboración</option>
+        </select>
+      </div>
+      <button type="submit" class="w-full py-4 bg-blue-900 text-white font-bold rounded-lg hover:bg-blue-800 transition">
+        Enviar Solicitud
+      </button>
+    </form>
+  </div>
+</main>
+
+<div th:replace="~{layout/layout :: footer}"></div>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/layout :: head}"></head>
+<body class="bg-gray-100 min-h-screen is-dashboard">
+<div th:replace="~{layout/layout :: navbar}"></div>
+
+<main class="container mx-auto p-6">
+    <h1 class="text-3xl font-bold mb-8 text-blue-900">Panel de Administración</h1>
+
+    <div class="bg-white p-6 rounded-2xl shadow-sm mb-10">
+        <h2 class="text-xl font-bold mb-4 text-gray-700">Noticias por Aprobar</h2>
+        <table class="w-full text-left">
+            <thead>
+            <tr class="border-b">
+                <th class="pb-3">Título</th>
+                <th class="pb-3">Autor</th>
+                <th class="pb-3">Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="n : ${noticiasPendientes}" class="border-b">
+                <td class="py-4" th:text="${n.titulo}"></td>
+                <td class="py-4" th:text="${n.usuario.nombre}"></td>
+                <td class="py-4">
+                    <form th:action="@{'/admin/news/aprobar/' + ${n.idNoticia}}" method="post">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                        <button type="submit" class="bg-green-600 text-white px-3 py-1 rounded-lg text-sm font-bold hover:bg-green-700 transition">
+                            <i class="fa-solid fa-check mr-1"></i> Aprobar
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="bg-white p-6 rounded-2xl shadow-sm">
+        <h2 class="text-xl font-bold mb-4 text-gray-700">Solicitudes de Contacto</h2>
+        <table class="w-full text-left">
+            <thead>
+            <tr class="border-b">
+                <th class="pb-3">Nombre</th>
+                <th class="pb-3">Email</th>
+                <th class="pb-3">Teléfono</th>
+                <th class="pb-3">Revisor</th> <th class="pb-3">Acción</th>   </tr>
+            </thead>
+            <tbody>
+            <tr th:each="s : ${solicitudes}" class="border-b">
+                <td class="py-4" th:text="${s.nombre}"></td>
+                <td class="py-4" th:text="${s.email}"></td>
+                <td class="py-4" th:text="${s.telefono}"></td>
+                <td class="py-4 font-bold text-blue-900"
+                    th:text="${s.revisor != null ? s.revisor.nombre : 'Sin asignar'}"></td>
+
+                <td class="py-4">
+                    <form th:if="${s.revisor == null}" th:action="@{'/admin/contacto/tomar/' + ${s.idContacto}}" method="post">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+                        <button type="submit" class="bg-blue-600 text-white px-3 py-1 rounded-lg text-xs font-bold hover:bg-blue-700 transition">
+                            Tomar
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+</body>
+</html>
